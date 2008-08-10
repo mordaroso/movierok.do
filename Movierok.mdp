@@ -1,5 +1,5 @@
 <Project name="Movierok" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Release">
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assemblyKeyFile="." assembly="Movierok" />
       <Build debugmode="True" target="Library" />
@@ -17,7 +17,6 @@
     <File name="src" subtype="Directory" buildaction="Compile" />
     <File name="src/MovierokItemSource.cs" subtype="Code" buildaction="Compile" />
     <File name="src/Movierok.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="movierok_logo64.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="src/RipItem.cs" subtype="Code" buildaction="Compile" />
     <File name="src/MovierokDo.cs" subtype="Code" buildaction="Compile" />
     <File name="src/MovieItem.cs" subtype="Code" buildaction="Compile" />
@@ -27,6 +26,7 @@
     <File name="gtk-gui/objects.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="gtk-gui/Movierok.Configuration.cs" subtype="Code" buildaction="Compile" />
     <File name="src/Configuration.cs" subtype="Code" buildaction="Compile" />
+    <File name="movierok_logo_192x192_black.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Data.SqliteClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
