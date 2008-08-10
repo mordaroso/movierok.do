@@ -1,0 +1,7 @@
+movierok.do
+===========
+
+This is the GNOME Do Plugin for movierok.
+Its written in C# with Mono and compiled with monodevelop (http://www.monodevelop.com).
+
+Visit http://movierok.org for more information.
