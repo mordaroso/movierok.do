@@ -1,0 +1,16 @@
+<Combine name="Movierok" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="Movierok" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="Movierok" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="Movierok" single="True">
+    <Execute type="None" entry="Movierok" />
+  </StartMode>
+  <Entries>
+    <Entry filename="Movierok.mdp" />
+  </Entries>
+</Combine>

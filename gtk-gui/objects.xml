@@ -1,0 +1,11 @@
+<objects>
+  <object type="Movierok.Configuration" palette-category="Movierok" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="Configuration Properties">
+        <property name="Username" />
+        <property name="Player" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+</objects>
