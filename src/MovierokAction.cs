@@ -67,7 +67,7 @@ namespace Movierok
 				foreach (RipItem item in items ) {
 					
 					Console.Out.WriteLine(item.Name + " start");
-					List<string> paths = GetPathsByChecksums(item.Parts);					
+					List<string> paths = GetPathsByMrokhashes(item.Parts);					
 					string args = "";					
 					foreach(string path in paths)
 						args += "'"+path+"' ";
@@ -111,17 +111,18 @@ namespace Movierok
 			}
 		}
 		
-		public static List<string> GetPathsByChecksums (List<string> checksums) {
+		public static List<string> GetPathsByMrokhashes (List<string> mrokhashes) {
 			List<string> paths = new List<string> ();
+			string connectionString = "";
 			try{
-				string connectionString = "URI=file:~/movierok.sqlite,version=3".Replace ("~", ProfilePath);
+				connectionString = "URI=file:~/movierok.sqlite,version=3".Replace ("~", ProfilePath);
 				IDbConnection dbcon;
 				dbcon = (IDbConnection) new SqliteConnection(connectionString);
 				dbcon.Open();
 				IDbCommand dbcmd = dbcon.CreateCommand();		
-				foreach(string checksum in checksums){
+				foreach(string mrokhash in mrokhashes){
 					string sql =
-					"SELECT path FROM parts WHERE checksum  = '"+checksum+"'";
+					"SELECT path FROM parts WHERE mrokhash  = '"+mrokhash+"'";
 					dbcmd.CommandText = sql;
 					IDataReader reader = dbcmd.ExecuteReader();
 					while(reader.Read()) {
@@ -139,7 +140,7 @@ namespace Movierok
 				dbcon = null;
 			} catch (Exception e) {
 				// Something went horribly wrong, so we print the error message.
-				Console.Error.WriteLine ("Could not read checksums: {0}, {1}", e.Message, e.StackTrace);
+				Console.Error.WriteLine ("Could not read mrokhashes in {0}: {1}, {2}", connectionString ,e.Message, e.StackTrace);
 			}
 			return paths;
 		}

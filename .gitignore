@@ -2,3 +2,6 @@
 *.sh
 bin
 bin/*
+*.pidb
+*.userprefs
+*.usertasks

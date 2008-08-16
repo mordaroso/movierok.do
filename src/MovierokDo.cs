@@ -85,9 +85,9 @@ namespace Movierok
 					List<string> parts = new List<string>();
 					foreach(XmlNode partNode in partList){
 						//Parse Part Node
-						XmlNode checksum = partNode.SelectSingleNode("check-sum");
+						XmlNode mrhash = partNode.SelectSingleNode("mrokhash");
 						XmlNode number = partNode.SelectSingleNode("number");
-						parts.Insert(int.Parse(number.FirstChild.Value),checksum.FirstChild.Value);
+						parts.Insert(int.Parse(number.FirstChild.Value),mrhash.FirstChild.Value);
 					}
 					rip.Parts = parts;
 					
