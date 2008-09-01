@@ -20,8 +20,10 @@
  */
 
 using System;
-using Do.Addins;
+using System.Collections.Generic;
 using Gtk;
+using Do;
+using Do.Addins;
 
 namespace Movierok
 {
@@ -32,9 +34,30 @@ namespace Movierok
 		public Configuration()
 		{
 			this.Build();
-			TxtUsername.Text = Username;
-			TxtPlayer.Text = Player;
+			txtUsername.Text = Username;
+			chsrPlayer.SetFilename(Player);
+			FillCombo();
 		}
+		
+		void FillCombo ()
+		{
+			ListStore store = new ListStore(typeof (string));
+			cmbProfiles.Model = store;
+			TreeIter iter = new TreeIter();
+			
+			List<FirefoxProfile> profiles = FirefoxProfile.All;
+			foreach(FirefoxProfile profile in profiles){
+				TreeIter tmpIter = store.AppendValues(profile.Name);
+				if (Profile == ""  && profile.isDefault)
+					Profile = profile.Name;
+				if(Profile == profile.Name){
+					iter = tmpIter;
+				}
+			}
+			
+			cmbProfiles.SetActiveIter(iter); 
+		}
+		
 		
 		static Configuration ()
 		{
@@ -47,18 +70,33 @@ namespace Movierok
 		}
 		
 		public static string Player {
-			get { return prefs.Get<string> ("Player", "vlc"); }
+			get { return prefs.Get<string> ("Player", "/usr/bin/vlc"); }
 			set { prefs.Set<string> ("Player", value); }
+		}
+		
+		public static string Profile {
+			get {return prefs.Get<string> ("Profile", ""); }
+			set { prefs.Set<string> ("Profile", value); }
 		}
 
 		protected virtual void OnTxtUsernameChanged (object sender, System.EventArgs e)
 		{
-			Username = TxtUsername.Text;
+			Username = txtUsername.Text;
 		}
 		
-		protected virtual void OnTxtPlayerChanged (object sender, System.EventArgs e)
+
+		protected virtual void OnChooserPlayerSelectionChanged (object sender, System.EventArgs e)
 		{
-			Player = TxtPlayer.Text;
+			Player = chsrPlayer.Filename;
 		}
+
+		protected virtual void OnCmbProfilesChanged (object sender, System.EventArgs e)
+		{
+			TreeIter iter;
+
+			if (cmbProfiles.GetActiveIter (out iter))
+				Profile = (string) cmbProfiles.Model.GetValue (iter, 0);
+		}
+		
 	}
 }

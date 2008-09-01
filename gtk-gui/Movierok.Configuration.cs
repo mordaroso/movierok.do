@@ -13,23 +13,35 @@ namespace Movierok {
     
     public partial class Configuration {
         
-        private Gtk.Frame FrmGeneral;
+        private Gtk.VBox boxConfig;
         
-        private Gtk.VBox vbox4;
+        private Gtk.Frame frmGeneral;
         
-        private Gtk.HBox hbox4;
+        private Gtk.Alignment GtkAlignment;
         
-        private Gtk.Label LblUsername;
+        private Gtk.Table table4;
         
-        private Gtk.Entry TxtUsername;
+        private Gtk.FileChooserButton chsrPlayer;
         
-        private Gtk.HBox hbox5;
+        private Gtk.Label lblPlayer;
         
-        private Gtk.Label LblPlayer;
+        private Gtk.Label lblUsername;
         
-        private Gtk.Entry TxtPlayer;
+        private Gtk.Entry txtUsername;
         
-        private Gtk.Label GtkLabel;
+        private Gtk.Label GtkLabel1;
+        
+        private Gtk.Frame frmAdvanced;
+        
+        private Gtk.Alignment GtkAlignment1;
+        
+        private Gtk.Table table5;
+        
+        private Gtk.ComboBox cmbProfiles;
+        
+        private Gtk.Label lblProfiles;
+        
+        private Gtk.Label lblAdvanced;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -37,80 +49,125 @@ namespace Movierok {
             Stetic.BinContainer.Attach(this);
             this.Name = "Movierok.Configuration";
             // Container child Movierok.Configuration.Gtk.Container+ContainerChild
-            this.FrmGeneral = new Gtk.Frame();
-            this.FrmGeneral.Name = "FrmGeneral";
-            this.FrmGeneral.ShadowType = ((Gtk.ShadowType)(0));
-            // Container child FrmGeneral.Gtk.Container+ContainerChild
-            this.vbox4 = new Gtk.VBox();
-            this.vbox4.Name = "vbox4";
-            this.vbox4.Spacing = 6;
-            // Container child vbox4.Gtk.Box+BoxChild
-            this.hbox4 = new Gtk.HBox();
-            this.hbox4.Name = "hbox4";
-            this.hbox4.Spacing = 6;
-            // Container child hbox4.Gtk.Box+BoxChild
-            this.LblUsername = new Gtk.Label();
-            this.LblUsername.Name = "LblUsername";
-            this.LblUsername.LabelProp = Mono.Unix.Catalog.GetString("Username: ");
-            this.hbox4.Add(this.LblUsername);
-            Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.hbox4[this.LblUsername]));
-            w1.Position = 0;
-            w1.Expand = false;
-            w1.Fill = false;
-            // Container child hbox4.Gtk.Box+BoxChild
-            this.TxtUsername = new Gtk.Entry();
-            this.TxtUsername.CanFocus = true;
-            this.TxtUsername.Name = "TxtUsername";
-            this.TxtUsername.IsEditable = true;
-            this.TxtUsername.InvisibleChar = '●';
-            this.hbox4.Add(this.TxtUsername);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox4[this.TxtUsername]));
-            w2.Position = 1;
-            this.vbox4.Add(this.hbox4);
-            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vbox4[this.hbox4]));
-            w3.Position = 0;
-            w3.Expand = false;
-            w3.Fill = false;
-            // Container child vbox4.Gtk.Box+BoxChild
-            this.hbox5 = new Gtk.HBox();
-            this.hbox5.Name = "hbox5";
-            this.hbox5.Spacing = 6;
-            // Container child hbox5.Gtk.Box+BoxChild
-            this.LblPlayer = new Gtk.Label();
-            this.LblPlayer.Name = "LblPlayer";
-            this.LblPlayer.LabelProp = Mono.Unix.Catalog.GetString("Player:        ");
-            this.hbox5.Add(this.LblPlayer);
-            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.hbox5[this.LblPlayer]));
-            w4.Position = 0;
-            w4.Expand = false;
-            w4.Fill = false;
-            // Container child hbox5.Gtk.Box+BoxChild
-            this.TxtPlayer = new Gtk.Entry();
-            this.TxtPlayer.CanFocus = true;
-            this.TxtPlayer.Name = "TxtPlayer";
-            this.TxtPlayer.IsEditable = true;
-            this.TxtPlayer.InvisibleChar = '●';
-            this.hbox5.Add(this.TxtPlayer);
-            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox5[this.TxtPlayer]));
-            w5.Position = 1;
-            this.vbox4.Add(this.hbox5);
-            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.vbox4[this.hbox5]));
-            w6.Position = 1;
-            w6.Expand = false;
-            w6.Fill = false;
-            this.FrmGeneral.Add(this.vbox4);
-            this.GtkLabel = new Gtk.Label();
-            this.GtkLabel.Name = "GtkLabel";
-            this.GtkLabel.LabelProp = Mono.Unix.Catalog.GetString("<b>General</b>");
-            this.GtkLabel.UseMarkup = true;
-            this.FrmGeneral.LabelWidget = this.GtkLabel;
-            this.Add(this.FrmGeneral);
+            this.boxConfig = new Gtk.VBox();
+            this.boxConfig.Name = "boxConfig";
+            this.boxConfig.Spacing = 6;
+            // Container child boxConfig.Gtk.Box+BoxChild
+            this.frmGeneral = new Gtk.Frame();
+            this.frmGeneral.Name = "frmGeneral";
+            this.frmGeneral.ShadowType = ((Gtk.ShadowType)(0));
+            // Container child frmGeneral.Gtk.Container+ContainerChild
+            this.GtkAlignment = new Gtk.Alignment(0F, 0F, 1F, 1F);
+            this.GtkAlignment.Name = "GtkAlignment";
+            this.GtkAlignment.LeftPadding = ((uint)(12));
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            this.table4 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
+            this.table4.Name = "table4";
+            this.table4.RowSpacing = ((uint)(6));
+            this.table4.ColumnSpacing = ((uint)(6));
+            // Container child table4.Gtk.Table+TableChild
+            this.chsrPlayer = new Gtk.FileChooserButton(Mono.Unix.Catalog.GetString("Select A File"), ((Gtk.FileChooserAction)(0)));
+            this.chsrPlayer.Name = "chsrPlayer";
+            this.table4.Add(this.chsrPlayer);
+            Gtk.Table.TableChild w1 = ((Gtk.Table.TableChild)(this.table4[this.chsrPlayer]));
+            w1.TopAttach = ((uint)(1));
+            w1.BottomAttach = ((uint)(2));
+            w1.LeftAttach = ((uint)(1));
+            w1.RightAttach = ((uint)(2));
+            w1.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table4.Gtk.Table+TableChild
+            this.lblPlayer = new Gtk.Label();
+            this.lblPlayer.Name = "lblPlayer";
+            this.lblPlayer.Xalign = 0F;
+            this.lblPlayer.LabelProp = Mono.Unix.Catalog.GetString("Player:");
+            this.table4.Add(this.lblPlayer);
+            Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table4[this.lblPlayer]));
+            w2.TopAttach = ((uint)(1));
+            w2.BottomAttach = ((uint)(2));
+            w2.XOptions = ((Gtk.AttachOptions)(4));
+            w2.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table4.Gtk.Table+TableChild
+            this.lblUsername = new Gtk.Label();
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Xalign = 0F;
+            this.lblUsername.LabelProp = Mono.Unix.Catalog.GetString("Username:");
+            this.table4.Add(this.lblUsername);
+            Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.table4[this.lblUsername]));
+            w3.XOptions = ((Gtk.AttachOptions)(4));
+            w3.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table4.Gtk.Table+TableChild
+            this.txtUsername = new Gtk.Entry();
+            this.txtUsername.CanFocus = true;
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.IsEditable = true;
+            this.txtUsername.InvisibleChar = '●';
+            this.table4.Add(this.txtUsername);
+            Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.table4[this.txtUsername]));
+            w4.LeftAttach = ((uint)(1));
+            w4.RightAttach = ((uint)(2));
+            w4.YOptions = ((Gtk.AttachOptions)(4));
+            this.GtkAlignment.Add(this.table4);
+            this.frmGeneral.Add(this.GtkAlignment);
+            this.GtkLabel1 = new Gtk.Label();
+            this.GtkLabel1.Name = "GtkLabel1";
+            this.GtkLabel1.LabelProp = Mono.Unix.Catalog.GetString("<b>General</b>");
+            this.GtkLabel1.UseMarkup = true;
+            this.frmGeneral.LabelWidget = this.GtkLabel1;
+            this.boxConfig.Add(this.frmGeneral);
+            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.boxConfig[this.frmGeneral]));
+            w7.Position = 0;
+            w7.Expand = false;
+            w7.Fill = false;
+            // Container child boxConfig.Gtk.Box+BoxChild
+            this.frmAdvanced = new Gtk.Frame();
+            this.frmAdvanced.Name = "frmAdvanced";
+            this.frmAdvanced.ShadowType = ((Gtk.ShadowType)(0));
+            // Container child frmAdvanced.Gtk.Container+ContainerChild
+            this.GtkAlignment1 = new Gtk.Alignment(0F, 0F, 1F, 1F);
+            this.GtkAlignment1.Name = "GtkAlignment1";
+            this.GtkAlignment1.LeftPadding = ((uint)(12));
+            // Container child GtkAlignment1.Gtk.Container+ContainerChild
+            this.table5 = new Gtk.Table(((uint)(1)), ((uint)(2)), false);
+            this.table5.Name = "table5";
+            this.table5.RowSpacing = ((uint)(6));
+            this.table5.ColumnSpacing = ((uint)(6));
+            // Container child table5.Gtk.Table+TableChild
+            this.cmbProfiles = Gtk.ComboBox.NewText();
+            this.cmbProfiles.Name = "cmbProfiles";
+            this.cmbProfiles.Active = 0;
+            this.table5.Add(this.cmbProfiles);
+            Gtk.Table.TableChild w8 = ((Gtk.Table.TableChild)(this.table5[this.cmbProfiles]));
+            w8.LeftAttach = ((uint)(1));
+            w8.RightAttach = ((uint)(2));
+            w8.XOptions = ((Gtk.AttachOptions)(4));
+            w8.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table5.Gtk.Table+TableChild
+            this.lblProfiles = new Gtk.Label();
+            this.lblProfiles.Name = "lblProfiles";
+            this.lblProfiles.Xalign = 0F;
+            this.lblProfiles.LabelProp = Mono.Unix.Catalog.GetString("Firefox Profile:");
+            this.table5.Add(this.lblProfiles);
+            Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.table5[this.lblProfiles]));
+            w9.XOptions = ((Gtk.AttachOptions)(4));
+            w9.YOptions = ((Gtk.AttachOptions)(4));
+            this.GtkAlignment1.Add(this.table5);
+            this.frmAdvanced.Add(this.GtkAlignment1);
+            this.lblAdvanced = new Gtk.Label();
+            this.lblAdvanced.Name = "lblAdvanced";
+            this.lblAdvanced.LabelProp = Mono.Unix.Catalog.GetString("<b>Advanced</b>");
+            this.lblAdvanced.UseMarkup = true;
+            this.frmAdvanced.LabelWidget = this.lblAdvanced;
+            this.boxConfig.Add(this.frmAdvanced);
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.boxConfig[this.frmAdvanced]));
+            w12.Position = 1;
+            w12.Expand = false;
+            w12.Fill = false;
+            this.Add(this.boxConfig);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Show();
-            this.TxtUsername.Changed += new System.EventHandler(this.OnTxtUsernameChanged);
-            this.TxtPlayer.Changed += new System.EventHandler(this.OnTxtPlayerChanged);
+            this.cmbProfiles.Changed += new System.EventHandler(this.OnCmbProfilesChanged);
         }
     }
 }

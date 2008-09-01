@@ -4,6 +4,7 @@
       <itemgroup label="Configuration Properties">
         <property name="Username" />
         <property name="Player" />
+        <property name="Profile" />
       </itemgroup>
     </itemgroups>
     <signals />

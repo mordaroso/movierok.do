@@ -1,5 +1,5 @@
 /*
- * MovierokAction.cs
+ * PlayAction.cs
  * 
  * GNOME Do is the legal property of its developers, whose names are too numerous
  * to list here.  Please refer to the COPYRIGHT file distributed with this
@@ -21,7 +21,6 @@
 
 using System;
 using System.Threading;
-using System.IO;
 using System.Collections.Generic;
 using System.Data;
 using System.Collections; 
@@ -36,10 +35,8 @@ using Mono.Unix;
 
 namespace Movierok
 {		
-	public sealed class MovierokAction : AbstractAction
+	public sealed class PlayAction : AbstractAction
 	{
-		const string BeginProfileName = "Path=";
-		const string BeginDefaultProfile = "Default=1";
 		
 		public override string Name {
 			get { return Catalog.GetString ("Play"); }
@@ -77,45 +74,12 @@ namespace Movierok
 			return null;
 		}
 		
-		/// <summary>
-		/// Looks in the firefox profiles file (~/.mozilla/firefox/profiles.ini)
-		/// for the name of the default profile, and returns the path to the
-		/// default profile.
-		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String"/> containing the absolute path to the
-		/// bookmarks.html file of the default firefox profile for the current
-		/// user.
-		/// </returns>
-		static string profile_path;
-		static string ProfilePath {
-			get {
-				string line, profile, path;
-				
-				if (null != profile_path) return profile_path;
-
-				profile = null;
-				path = Path.Combine (Paths.UserHome, ".mozilla/firefox/profiles.ini");
-				using (StreamReader r = File.OpenText (path)) {
-					while (null != (line = r.ReadLine ())) {
-						if (line.StartsWith (BeginDefaultProfile)) break;
-						if (line.StartsWith (BeginProfileName)) {
-							line = line.Trim ();
-							line = line.Substring (BeginProfileName.Length);
-							profile = line;
-						}
-					}
-				}
-				return profile_path = Paths.Combine (
-					Paths.UserHome, ".mozilla/firefox", profile);
-			}
-		}
-		
 		public static List<string> GetPathsByMrokhashes (List<string> mrokhashes) {
 			List<string> paths = new List<string> ();
 			string connectionString = "";
 			try{
-				connectionString = "URI=file:~/movierok.sqlite,version=3".Replace ("~", ProfilePath);
+				FirefoxProfile profile = FirefoxProfile.getProfile(Configuration.Profile);
+				connectionString = "URI=file:~/movierok.sqlite,version=3".Replace ("~", profile.Path);
 				IDbConnection dbcon;
 				dbcon = (IDbConnection) new SqliteConnection(connectionString);
 				dbcon.Open();

@@ -41,7 +41,7 @@ namespace Movierok
 		{
 			Uri imageUri = new Uri("http://www.omdb.org/image/default/"+image+".jpeg");
 			string movierok_folder = MovierokDo.MovierokDirectory();
-			string image_folder = movierok_folder+"/images/";
+			string image_folder = movierok_folder+"images/";
 			string location = image_folder + image + ".jpeg";
 			WebClient client = new WebClient ();
 			// create folders if not exist
@@ -53,7 +53,7 @@ namespace Movierok
 			try {
 				client.DownloadFile (imageUri.AbsoluteUri, location);
 			} catch {
-				Console.Error.WriteLine ("{0} does not exist!",location);
+				Console.Error.WriteLine ("Error while fetching {0}!",imageUri.AbsoluteUri);
 			}
 		}
 
@@ -79,10 +79,10 @@ namespace Movierok
 			get { return image; } 
 			set { 
 				image = value;
-				if (!System.IO.File.Exists (MovierokDo.MovierokDirectory()+"/images/" + image+ ".jpeg")){
+				if (!System.IO.File.Exists (MovierokDo.MovierokDirectory()+"images/" + image+ ".jpeg")){
 					DownloadImage(image);
 				}
-				cover = MovierokDo.MovierokDirectory()+"/images/" + image + ".jpeg";
+				cover = MovierokDo.MovierokDirectory()+"images/" + image + ".jpeg";
 			}
 		}
 		

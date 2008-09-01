@@ -35,6 +35,7 @@ namespace Movierok
 	{
 		private static List<IItem> movies;
 		private static List<IItem> rips;
+		public const string remote = "movierok.org";
 		
 		static MovierokDo ()
 		{
@@ -148,9 +149,10 @@ namespace Movierok
 			// get all rips.xml from movierok.org
 			bool running = true;
 			int page = 1;
+			int rips = 0;
 			TextWriter tw = new StreamWriter(MovierokDirectory() + uname + ".xml");			
 			while (running){
-			    string url = "http://movierok.org/users/"+uname+"/rips.xml?page="+page;
+			    string url = "http://"+remote+"/users/"+uname+"/rips.xml?page="+page;
 				WebRequest xmlRequest = WebRequest.Create(url);				
 				if (xmlRequest != null){
 					StreamReader sr = new StreamReader(xmlRequest.GetResponse().GetResponseStream());
@@ -160,8 +162,12 @@ namespace Movierok
 						line = sr.ReadLine();
 						if(line != null && line.Contains("nil-classes"))
 							running = false;
-						else if(line != null && (page == 1 || (!line.Contains("<?xml") && !line.Contains("<rips"))) && !line.Contains("</rips>"))
+						else if(line != null && (page == 1 || (!line.Contains("<?xml") && !line.Contains("<rips"))) && !line.Contains("</rips>")){
+							if(line.Contains("<rip>")){
+								rips++;
+							}
 							tw.WriteLine(line);
+						}
 					}
 					while (line !=null);
 
@@ -172,6 +178,8 @@ namespace Movierok
 				}
 				page++;
 			}
+			if(rips == 0)
+				tw.WriteLine("<rips>");
 			tw.WriteLine("</rips>");
 			tw.Close();
 		}

@@ -30,7 +30,7 @@ using Mono.Unix;
 namespace Movierok
 {
 
-	public class RipItem : IItem, IURLItem
+	public class RipItem : IItem
 	{
 		protected string releaser;
 		protected int id;
@@ -54,7 +54,7 @@ namespace Movierok
 		}
 		
 		public virtual string URL {
-			get { return "http://movierok.org/rips/"+Id;}
+			get { return "http://"+ MovierokDo.remote + "/rips/"+Id;}
 		}
 
 		public virtual int Id { 
