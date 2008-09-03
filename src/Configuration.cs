@@ -97,6 +97,11 @@ namespace Movierok
 			if (cmbProfiles.GetActiveIter (out iter))
 				Profile = (string) cmbProfiles.Model.GetValue (iter, 0);
 		}
+
+		protected virtual void OnBtnAccountClicked (object sender, System.EventArgs e)
+		{
+			Util.Environment.Open ("http://" + MovierokDo.remote + "/users/new");
+		}
 		
 	}
 }

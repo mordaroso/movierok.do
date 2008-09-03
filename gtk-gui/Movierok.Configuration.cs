@@ -43,6 +43,12 @@ namespace Movierok {
         
         private Gtk.Label lblAdvanced;
         
+        private Gtk.VBox vbox1;
+        
+        private Gtk.Label lblAccount;
+        
+        private Gtk.Button btnAccount;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget Movierok.Configuration
@@ -162,12 +168,43 @@ namespace Movierok {
             w12.Position = 1;
             w12.Expand = false;
             w12.Fill = false;
+            // Container child boxConfig.Gtk.Box+BoxChild
+            this.vbox1 = new Gtk.VBox();
+            this.vbox1.Name = "vbox1";
+            this.vbox1.Spacing = 6;
+            // Container child vbox1.Gtk.Box+BoxChild
+            this.lblAccount = new Gtk.Label();
+            this.lblAccount.Name = "lblAccount";
+            this.lblAccount.LabelProp = Mono.Unix.Catalog.GetString("Don't have an account?");
+            this.vbox1.Add(this.lblAccount);
+            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.vbox1[this.lblAccount]));
+            w13.Position = 0;
+            w13.Expand = false;
+            w13.Fill = false;
+            // Container child vbox1.Gtk.Box+BoxChild
+            this.btnAccount = new Gtk.Button();
+            this.btnAccount.CanFocus = true;
+            this.btnAccount.Name = "btnAccount";
+            this.btnAccount.UseUnderline = true;
+            this.btnAccount.Label = "Sign up for movierok";
+            this.vbox1.Add(this.btnAccount);
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.vbox1[this.btnAccount]));
+            w14.Position = 1;
+            w14.Expand = false;
+            w14.Fill = false;
+            this.boxConfig.Add(this.vbox1);
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.boxConfig[this.vbox1]));
+            w15.PackType = ((Gtk.PackType)(1));
+            w15.Position = 2;
+            w15.Expand = false;
+            w15.Fill = false;
             this.Add(this.boxConfig);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Show();
             this.cmbProfiles.Changed += new System.EventHandler(this.OnCmbProfilesChanged);
+            this.btnAccount.Clicked += new System.EventHandler(this.OnBtnAccountClicked);
         }
     }
 }
