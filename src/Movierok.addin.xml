@@ -1,9 +1,9 @@
 <Addin
 	id="movierok"
 	namespace="Do"
-	version="0.2"
-	name="movierok.org Movie Search"
-	description="Searches and playes your movierok movies."
+	version="0.3"
+	name="movierok"
+	description="Search and play your movies using movierok.org."
 	author="movierok team"
 >
 
