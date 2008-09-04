@@ -84,7 +84,7 @@ namespace Movierok
 						}else if (line.StartsWith (BeginProfilePath)) {
 							line = line.Trim ();
 							line = line.Substring (BeginProfilePath.Length);
-							profile.Path = line;
+							profile.Path = "~/.mozilla/firefox/".Replace ("~", home) + line;
 						}else if (line.StartsWith (BeginDefaultProfile)) {
 							profile.isDefault = true;
 						}
