@@ -32,17 +32,36 @@ namespace Movierok
 
 	public class RipItem : IItem
 	{
-		protected string releaser;
-		protected int id;
+		protected string releaser, title, cover;
+		protected int id, omdb, image;
 		protected List<string> parts;
-		protected MovieItem movie;
 
 		public RipItem ()
 		{
 		}
+		
+		private static void DownloadImage(int image)
+		{
+			Uri imageUri = new Uri("http://www.omdb.org/image/default/"+image+".jpeg");
+			string movierok_folder = MovierokDo.MovierokDirectory();
+			string image_folder = movierok_folder+"images/";
+			string location = image_folder + image + ".jpeg";
+			WebClient client = new WebClient ();
+			// create folders if not exist
+			if (!System.IO.Directory.Exists (movierok_folder))
+				System.IO.Directory.CreateDirectory (movierok_folder);
+			if (!System.IO.Directory.Exists (image_folder))
+				System.IO.Directory.CreateDirectory (image_folder);
+			// download image
+			try {
+				client.DownloadFile (imageUri.AbsoluteUri, location);
+			} catch {
+				Console.Error.WriteLine ("Error while fetching {0}!",imageUri.AbsoluteUri);
+			}
+		}
 
 		public virtual string Name { 
-			get { return movie.Name; } 
+			get { return title; } 
 		}
 		
 		public virtual string Description { 
@@ -50,7 +69,7 @@ namespace Movierok
 		}
 		
 		public virtual string Icon { 
-			get { return movie.Cover; } 
+			get { return cover; } 
 		}
 		
 		public virtual string URL {
@@ -67,9 +86,25 @@ namespace Movierok
 			set { releaser = value; }
 		}
 		
-		public virtual MovieItem Movie { 
-			get { return movie; } 
-			set { movie = value; }
+		public virtual int Omdb { 
+			get { return omdb; } 
+			set { omdb = value; }
+		}
+		
+		public virtual int Image { 
+			get { return image; } 
+			set { 
+				image = value;
+				if (!System.IO.File.Exists (MovierokDo.MovierokDirectory()+"images/" + image+ ".jpeg")){
+					DownloadImage(image);
+				}
+				cover = MovierokDo.MovierokDirectory()+"images/" + image + ".jpeg";
+			}
+		}
+		
+		public virtual string Title { 
+			get { return title; } 
+			set { title = value; }
 		}
 		
 		public virtual List<string> Parts{
