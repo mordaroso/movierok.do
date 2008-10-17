@@ -75,49 +75,43 @@ namespace Movierok
 					// Rip Id
 					XmlNode idNode = ripNode.SelectSingleNode("id");
 					rip.Id = int.Parse(idNode.FirstChild.Value);
+					
+					// Rip Omdb Id
+					XmlNode omdbNode = ripNode.SelectSingleNode("omdb");
+					if(omdbNode.HasChildNodes)					
+						rip.Omdb = int.Parse(omdbNode.FirstChild.Value);
+					
+					// Rip Title
+					XmlNode titleNode = ripNode.SelectSingleNode("title");
+					if(titleNode.HasChildNodes)					
+						rip.Title = titleNode.FirstChild.Value;
+					
+					// Rip Image
+					XmlNode imageNode = ripNode.SelectSingleNode("image");
+					if(imageNode.HasChildNodes)					
+						rip.Image = int.Parse(imageNode.FirstChild.Value);
+					
 					// Rip Releaser
 					XmlNode releaserNode = ripNode.SelectSingleNode("releaser");
 					if(releaserNode.HasChildNodes)					
 						rip.Releaser = releaserNode.FirstChild.Value;
+					
 					
 					// Parts
 					XmlNode partsNode = ripNode.SelectSingleNode("parts");
 					XmlNodeList partList = partsNode.ChildNodes;
 					List<string> parts = new List<string>();
 					foreach(XmlNode partNode in partList){
-						//Parse Part Node
-						XmlNode mrhash = partNode.SelectSingleNode("mrokhash");
-						XmlNode number = partNode.SelectSingleNode("number");
-						parts.Insert(int.Parse(number.FirstChild.Value),mrhash.FirstChild.Value);
+						//Part MRChecksum
+						parts.Add(partNode.FirstChild.Value);
 					}
 					rip.Parts = parts;
-					
-					// Parse Movie Node
-					MovieItem movie = new MovieItem();						
-					XmlNode movieNode = ripNode.SelectSingleNode("movie");
-					// Movie Description
-					XmlNode descriptionNode = movieNode.SelectSingleNode("description");			
-					if(descriptionNode.HasChildNodes)							
-						movie.Description = descriptionNode.FirstChild.Value;
-					// Movie Image
-					XmlNode imageNode = movieNode.SelectSingleNode("image");
-					if(imageNode.HasChildNodes)
-						movie.Image = int.Parse(imageNode.FirstChild.Value);
-					// Movie Omdb
-					XmlNode omdb = movieNode.SelectSingleNode("omdb");
-					movie.Omdb = int.Parse(omdb.FirstChild.Value);
-					// Movie Title
-					XmlNode movieTitle = movieNode.SelectSingleNode("title");
-					movie.Title = movieTitle.FirstChild.Value;
-					
-					movies.Add(movie);
-					rip.Movie = movie;
 					rips.Add(rip);
 				}
 			} catch (Exception e) {
 				// Something went horribly wrong, so we print the error message.
-				Console.Error.WriteLine ("Could not read movierok rips {0}: {1} {2}",
-				                         Configuration.Username, e.Message, e.StackTrace);
+				Console.Error.WriteLine ("Could not read movierok rips {0}: {1}",
+				                         Configuration.Username, e.Message);
 			}
 		}
 		
@@ -126,12 +120,13 @@ namespace Movierok
 				System.IO.Directory.CreateDirectory (MovierokDirectory());
 			XmlDocument xmlDoc = new XmlDocument();
 			try{
-				int hours = 12;
+				// refresh loop in hours
+				int hours = 4;
 				long diff = (DateTime.Now.ToFileTime()-System.IO.File.GetCreationTime(MovierokDirectory() + uname + ".xml").ToFileTime())/10000000-(3600*hours);
 				if(diff > 0)					
-				RefreshXML(uname);
+					RefreshXML(uname);
 				xmlDoc.Load(MovierokDirectory() + uname + ".xml");
-			}catch(Exception){
+			} catch {
 				RefreshXML(uname);
 				xmlDoc.Load(MovierokDirectory() + uname + ".xml");
 			}
@@ -146,42 +141,21 @@ namespace Movierok
 		}
 		
 		protected static void GetRipListFromOrg(string uname){
-			// get all rips.xml from movierok.org
-			bool running = true;
-			int page = 1;
-			int rips = 0;
-			TextWriter tw = new StreamWriter(MovierokDirectory() + uname + ".xml");			
-			while (running){
-			    string url = "http://"+remote+"/users/"+uname+"/rips.xml?page="+page;
-				WebRequest xmlRequest = WebRequest.Create(url);				
-				if (xmlRequest != null){
-					StreamReader sr = new StreamReader(xmlRequest.GetResponse().GetResponseStream());
-					string line;
-					do
-					{
-						line = sr.ReadLine();
-						if(line != null && line.Contains("nil-classes"))
-							running = false;
-						else if(line != null && (page == 1 || (!line.Contains("<?xml") && !line.Contains("<rips"))) && !line.Contains("</rips>")){
-							if(line.Contains("<rip>")){
-								rips++;
-							}
-							tw.WriteLine(line);
-						}
-					}
-					while (line !=null);
-
-					
-					
-				}else{
-					running = false;
-				}
-				page++;
+			// get all.xml from movierok.org
+			Uri xmlUri = new Uri("http://"+remote+"/users/"+uname+"/rips/all.xml");
+			string location = MovierokDirectory() + uname + ".xml";
+			WebClient client = new WebClient ();
+			
+			// create folder if not exist
+			if (!System.IO.Directory.Exists (MovierokDirectory()))
+				System.IO.Directory.CreateDirectory (MovierokDirectory());
+			
+			// download all.xml
+			try {
+				client.DownloadFile (xmlUri.AbsoluteUri, location);
+			} catch (Exception e){
+				Console.Error.WriteLine ("Error while fetching {0}: {1}",xmlUri.AbsoluteUri, e.Message);
 			}
-			if(rips == 0)
-				tw.WriteLine("<rips>");
-			tw.WriteLine("</rips>");
-			tw.Close();
 		}
 	}
 }
